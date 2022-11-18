@@ -55,23 +55,17 @@ function Logging() {
   };
   return (
     <>
-      <Grid  style={ {backgroundImage: `url(${lg})`, backgroundRepeat: "no-repeat"} }>
+      <Grid  >
         <Paper
           elevation={15}
-          style={{
-            margin: "60px auto",
-            width: "400px",
-            padding: "20px",
-            height: "60vh",
-            
-        
-          }}
+          className="paper"
+          style={{padding: "20px", paddingTop: "50px"}}
         >
           <Grid align="center">
             <Avatar style={{ backgroundColor: "green" }}>
               <LockIcon />
             </Avatar>
-            <h2 style={{ margin: "2px" }}> log in</h2>
+            <h2 style={{ margin: "2px" }}> sign in</h2>
             <Typography> <h3>fill the form to sign in</h3></Typography>
           </Grid>
           <form onSubmit={handleSubmit}>
@@ -118,7 +112,7 @@ function Logging() {
             <Typography>
               you don,t have an account ?
               <Link href="/Register" underline="always">
-                sign in
+                sign up
               </Link>
             </Typography>
           </form>

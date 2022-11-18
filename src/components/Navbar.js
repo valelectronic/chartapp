@@ -1,4 +1,4 @@
-import React, { } from "react";
+import React, {useEffect,useState} from "react";
 import { Link } from "react-router-dom";
 import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
@@ -11,7 +11,24 @@ import { useNavigate } from "react-router-dom";
 
 
 
+
 function Navbar({user}) {
+  const [stickyClass, setStickyClass] = useState('')
+
+  
+  useEffect(() => {
+    window.addEventListener('scroll', stickNavbar);
+    return () => window.removeEventListener('scroll', stickNavbar);
+  }, []);
+
+  const stickNavbar = () => {
+    if (window !== undefined) {
+      let windowHeight = window.scrollY;
+      // window height changed for the demo
+      windowHeight > 80 ? setStickyClass('sticky-nav') : setStickyClass('');
+    }
+  };
+
 
   const history = useNavigate();
   const handleSignOut = async () => {
@@ -19,15 +36,17 @@ function Navbar({user}) {
       isOnLine: false,
     });
     await signOut(auth);
-    history("/Logging");
     
+    history("/Logging"); 
   };
+ 
   return (
+
     <>
-    
-      <AppBar position="static" >
-        <Toolbar>
-          <IconButton
+
+    <div className="hero">
+      <nav className={`navbar ${stickyClass}`} >
+        <h1 className="logo"><IconButton
             size="large"
             color="inherit"
             edge="start"
@@ -37,42 +56,32 @@ function Navbar({user}) {
               <ContactMailIcon />
             </Link>
           </IconButton>
-          <Link to="/" ></Link >
-          <Typography variant="h6" sx={{ flexGrow: 1 }}  className="stack2">
-            HI_ME
-          </Typography>
-
-          
-            {user?(
-              <Stack  direction="row" spacing={2} >
-                <Link to="/profile" className="stack3"><h2>profile</h2></Link >
+          <Link to="/" ></Link > Hi <span>ME</span></h1>
+        <ul>
+      {user ? (
+<li>
+<Link to="/profile" className="stack3"> <li> <h3 style={{padding:"5px"}}>profile</h3></li></Link >
                 <Button color="inherit" >
                   <Link to="/logout" onClick={handleSignOut} className="stack4">
-                    <h3>logout</h3>
+                  <li> <h3>logout</h3></li>
                   </Link>
+                  </Button>
+                  </li>
+      ):(
+<>
+<Button color="inherit">
+                  <Link to="/Register" className="stack5"><li><h3>sign up</h3></li></Link>
                 </Button>
-                </Stack>
-            ):(
-
-              <Stack direction="row" spacing={2}>
                 <Button color="inherit">
-                  <Link to="/Register" className="stack5"><h2>register</h2></Link>
+                  <Link to="/Logging" className="stack6"> <li><h3>login</h3></li></Link>
                 </Button>
-                <Button color="inherit">
-                  <Link to="/Logging" className="stack6"> <h3>login</h3></Link>
-                </Button>
-              </Stack>
-            )}
-              
-          
-
-           
-              
-            
-          
-          
-        </Toolbar>
-      </AppBar>
+</>
+      ) 
+      }
+      </ul>
+      </nav>
+    </div>
+     
     </>
   );
 }

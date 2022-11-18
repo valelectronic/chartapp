@@ -69,9 +69,9 @@ function Register() {
 
   return (
     <div>
-      <Grid  style={ {backgroundImage: `url(${lg})`, backgroundRepeat: "no-repeat"} }>
-        <Paper elevation={15} style={PaperStyle} className="paper">
-          <Grid align="center">
+      <Grid >
+        <Paper  elevation={15}  className="paper" >
+          <Grid align="center" >
             <Avatar style={{ background: "green" }}>
               <PersonAddAlt1Icon />
             </Avatar>
@@ -82,7 +82,7 @@ function Register() {
           </Grid>
           <form
             component="form"
-            style={{ margin: "10px" }}
+            style={{  padding:"10px" }}
             onSubmit={handleSubmit}
           >
             <TextField

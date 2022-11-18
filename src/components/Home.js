@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState,useRef} from "react";
 import { db,auth,storage } from "../firebase";
 import { collection,query,where,onSnapshot,
   addDoc,Timestamp,orderBy,setDoc,doc,getDoc,updateDoc} from "firebase/firestore";
@@ -6,7 +6,10 @@ import { collection,query,where,onSnapshot,
 import Users from "./Users";
 import MessageForm from "./MessageForm";
 import Message from "./Message";
-import back from "../components/back.jpg"
+import { Button } from '@mui/material';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+
+
 
 
 function Home() {
@@ -37,6 +40,7 @@ return ()=> unsub()
 // getting conversation between users
 
   const selectUser = async (user)=>{
+   
     
     setChart(user)
     const user2 = user.uid
@@ -94,41 +98,46 @@ await setDoc(doc(db, 'lastMsg',id),{
 })
 
     setText("")
+
   }
+  
+    
+    
   return (
     <>
     <div className="home-container">
       <div className="users-container">
-      {users.map((user)=> <Users chart = {chart} user = {user} user1 = {user1} key={user.uid} selectUser = {selectUser}/>)}
-
+      {users.map((user)=> <Users  msg = {msg} chart = {chart} user = {user} user1 = {user1} key={user.uid} selectUser = {selectUser}/>)}
       </div>
-      <div className="chartbox" style={ {backgroundImage: `url(${back})`, backgroundRepeat: "no-repeat"} }>
-      {chart ? (
-      <>
+
+{chart ? (
+      <div className="chartbox" style={{color: "black"}} >
       <div className="user-message">
-        <h3 className="c-name">{chart.name}</h3> <br />
-        
+        <h3 className="c-name">{chart.name}
+         <Button  onClick={() => {
+          window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+        }}  style={{color:"red", position: 'fixed',
+          padding: '1rem 1.5rem',
+          fontSize: '10px',
+          bottom: '80px',
+          right: '170px',
+          backgroundColor: 'black',
+          color: '#fff',
+          textAlign: 'center',}}><ArrowUpwardIcon style= {{fontSize:"30px"}}/>up </Button> </h3> 
         </div>
         <div className="messages">
           {msg.length ? msg.map((msgs,i)=>
-          <Message key = {i} msgs = {msgs} user1 = {user1}/>):null}
+          <Message key = {i}  msgs = {msgs} user1 = {user1}/>):null}
         </div>
         <MessageForm setImg = {setImg} handleSubmit = {handleSubmit} text = {text} setText = {setText}/>
-        </>
-        ):( <h3 className="noMessage"> 
-        <h1 style = {{color: 'red'}}>NOTE PLEASE !!!</h1><br />
-        1. click on profile to upload your profile picture <br /> <br />
-        2. Selected any user to start a conversation. <br /> <br /> 3.To avoid
-        uploading multiple images if you feel like sending an image to someone  while charting, just select your images and
-        allow it to upload, before you send any message again click on "PROFILE",
-        then click back to home page and continue your charting.
-        <br /> <br />
-        <p>Any feedback or you feel like buying me a cup of tea, feel free
-          to message me, thanks
-        </p>
-        </h3>)}
-       
     </div>
+):(
+  <div className='loader'>
+  <h2 style={{color: "red"}}>LET'S COMMUNICATE</h2>
+    <div className="spine"></div>
+    </div>
+)}
+
     </div>
   </>
   );

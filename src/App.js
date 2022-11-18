@@ -14,10 +14,11 @@ import Home from "./components/Home";
 import Message from "./components/Message";
 
 
+
 function App() {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
-    
+ 
   useEffect(()=>{
     onAuthStateChanged(auth,(user)=>{
       setUser(user)
@@ -29,16 +30,18 @@ function App() {
   if(loading){
     return<Loading></Loading>
   }
+  
 
   return (
     <>
   
-        <Navbar  user = {user} Loading = {loading}/>
+        <Navbar   user = {user} Loading = {loading} />
         <Routes>
           
           <Route element = {<Private/>}>
             <Route element = {<Home/>} path = "/" exact/>
             <Route path="/Profile" exact element={<Profile />} />
+            
           </Route>
           <Route path="/Register" exact element={<Register />} />
           <Route path="/Logging" exact element={<Logging />} />

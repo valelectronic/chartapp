@@ -2,7 +2,10 @@ import React from 'react'
 
 function Logout() {
   return (
-    <div></div>
+    <div className='loader'>
+  
+    <div className="spine"></div>
+    </div>
   )
 }
 

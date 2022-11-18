@@ -11,6 +11,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useNavigate } from 'react-router-dom';
 function Profile() {
+ 
+
   const history = useNavigate()
  
   const [img, setImg] = useState()
@@ -71,9 +73,9 @@ function Profile() {
   }
   
   return user ?(
-    <section className="container" style={{backgroundImage: `url(${lg})`, backgroundRepeat: "no-repeat"}}> 
+    <section className="container" > 
     
-      <div className="card">
+      <div className="card" >
         <div className="image">
         <img src= {user.Avatar||img} alt= 'avatar' className='img2' />
       
